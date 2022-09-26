@@ -1,3 +1,6 @@
+
+<!-- NOT USED (DELETE) -->
+
 <%@ page import="utils.CookieManger" %>
 <%@ page import="utils.JSFunction" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
