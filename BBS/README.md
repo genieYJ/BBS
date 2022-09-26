@@ -61,7 +61,8 @@ SQL> commit;
 ---
 #### Connection Pool을 위한 DB 연결
  - Tomcat의 conf 디렉토리의 server.xml과 context.xml 수정 필요
- ```
+
+```
  [server.xml]
  // <GlobalNamingResources> 엘리먼트에 추가
  <Resource auth="Container"
@@ -75,7 +76,7 @@ SQL> commit;
               name="dbcp_myoracle"
               username="admin"
               password="1234" />
-``` 
+```
 ```
 [context.xml]
 // <context> 엘리먼트에 추가

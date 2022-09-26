@@ -15,12 +15,12 @@ public class JDBConnect {
 	public PreparedStatement psmt;
 	public ResultSet rs;
 	
-	public JDBConnect(String driver, String url, String user, String pwd) {
+	public JDBConnect(String driver, String url, String id, String pwd) {
 		
 		try {
 			Class.forName(driver);
 			
-			con = DriverManager.getConnection(url, user, pwd);
+			con = DriverManager.getConnection(url, id, pwd);
 			System.out.println("DB 연결1 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -33,10 +33,10 @@ public class JDBConnect {
 			String driver = application.getInitParameter("OracleDriver");
 			Class.forName(driver);
 			
-			String url = application.getInitParameter("OracleDraiver");
-			String user = application.getInitParameter("OracleId");
+			String url = application.getInitParameter("OracleURL");
+			String id = application.getInitParameter("OracleId");
 			String pwd = application.getInitParameter("OraclePwd");
-			con = DriverManager.getConnection(url, user, pwd);
+			con = DriverManager.getConnection(url, id, pwd);
 			System.out.println("DB 연결2 성공");
 		} catch (Exception e) {
 			e.printStackTrace();

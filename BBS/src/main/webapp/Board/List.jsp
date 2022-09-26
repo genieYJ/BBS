@@ -32,7 +32,7 @@ dao.close();
 </head>
 <body>
 	<h2>목록 보기(List)</h2>
-	<form action="get">
+	<form method="get">
 		<table border="1" width="90%">
 			<tr>
 				<td align="center">
