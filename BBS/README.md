@@ -57,3 +57,27 @@ VALUES (seq_board_num.nextval, '관리자가 작성한 제목입니다', '관리
 [commit]
 SQL> commit;
 ```
+
+---
+#### Connection Pool을 위한 DB 연결
+ - Tomcat의 conf 디렉토리의 server.xml과 context.xml 수정 필요
+ ```
+ [server.xml]
+ // <GlobalNamingResources> 엘리먼트에 추가
+ <Resource auth="Container"
+              driverClassName="oracle.jdbc.OracleDriver"
+              initialSize="0"
+              minIdle="5"
+              maxTotal="20"
+              maxIdle="20"
+              maxWaitMillis="5000"
+              url="jdbc:oracle:thin:@localhost:1521:xe"
+              name="dbcp_myoracle"
+              username="admin"
+              password="1234" />
+``` 
+```
+[context.xml]
+// <context> 엘리먼트에 추가
+<ResourceLink global="dbcp_myoracle" name="dbcp_myoracle" type="javax.sql.DataSource" />
+```

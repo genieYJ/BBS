@@ -12,7 +12,7 @@ if ("admin".equals(user_id) && "1234".equals(user_pw)) {
 	if (save_check != null && save_check.equals("Y")) {
 		CookieManger.makeCookie(response, "loginID", user_id, 86400);
 	} else {
-		CookieManger.deleteCookie(response, "loaginID");
+		CookieManger.deleteCookie(response, "loginID");
 	}
 	JSFunction.alertLocation("로그인에 성공했습니다", "Login.jsp", out);
 } else {

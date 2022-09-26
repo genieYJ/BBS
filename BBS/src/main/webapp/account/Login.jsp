@@ -16,7 +16,25 @@ if (!loginID.equals("")) {
 </head>
 <body>
 	<h2>Login</h2>
-	<form action="IdSaveProcess.jsp" method="post">
+	<span style="color: red;font-size: 1.2rem;">
+		<%= request.getAttribute("LoginErrMsg") == null
+			? "" : request.getAttribute("LoginErrMsg")
+		%>
+	</span>
+	<% if (session.getAttribute("UserID") == null) { %>
+	<script>
+		function validForm(form) {
+			if (!form.user_id.value) {
+				alert("아이디를 입력하세요");
+				return false;
+			}
+			if (!form.user_pw.value) {
+				alert("비밀번호를 입력하세요");
+				return false;
+			}
+		}
+	</script>
+	<form action="LoginProcess.jsp" method="post" name="loginFrm" onsubmit="return validForm(this);">
 		<label>ID</label>
 		<input type="text" name="user_id" value="<%= loginID %>">
 		<br>
@@ -28,5 +46,9 @@ if (!loginID.equals("")) {
 		<br>
 		<input type="submit" value="Login">
 	</form>
+	<% } else { %>
+	<%= session.getAttribute("UserName") %> 회원님, 로그인 하셨습니다. <br>
+	<a href="Logout.jsp">[Logout]</a>
+	<% } %>
 </body>
 </html>
