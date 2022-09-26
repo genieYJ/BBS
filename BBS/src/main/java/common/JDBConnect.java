@@ -34,9 +34,9 @@ public class JDBConnect {
 			Class.forName(driver);
 			
 			String url = application.getInitParameter("OracleDraiver");
-			String id = application.getInitParameter("OracleId");
+			String user = application.getInitParameter("OracleId");
 			String pwd = application.getInitParameter("OraclePwd");
-			con = DriverManager.getConnection(url, id, pwd);
+			con = DriverManager.getConnection(url, user, pwd);
 			System.out.println("DB 연결2 성공");
 		} catch (Exception e) {
 			e.printStackTrace();

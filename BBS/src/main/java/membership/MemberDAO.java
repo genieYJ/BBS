@@ -18,8 +18,6 @@ public class MemberDAO extends JDBConnect {
 			psmt.setString(2, upass);
 			rs = psmt.executeQuery();
 			
-			System.out.println(rs);
-			
 			if(rs.next()) {
 				dto.setId(rs.getString("id"));
 				dto.setPass(rs.getString("pass"));
