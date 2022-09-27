@@ -1,8 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="board.*" %>
-<%@ page import="utils.Paging" %>
+<%@ page import="board.BoardDAO" %>
+<%@ page import="board.BoardDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -20,22 +20,8 @@ if (searchField != null) {
 }
 
 int totalCount = dao.selectCount(param);
+List<BoardDTO> boardLists = dao.selectList(param);
 
-int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
-int blockPage = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
-int totalPage = (int)Math.ceil((double)totalCount / pageSize);
-
-int pageNum = 1;
-String pageTemp = request.getParameter("pageNum");
-if (pageTemp != null && !pageTemp.equals(""))
-	pageNum = Integer.parseInt(pageTemp);
-
-int start = (pageNum - 1) * pageSize + 1;
-int end = pageNum * pageSize;
-param.put("start", start);
-param.put("end", end);
-
-List<BoardDTO> boardLists = dao.selectListPaging(param);
 dao.close();
 %>
 <!DOCTYPE html>
@@ -45,7 +31,7 @@ dao.close();
 <title>View Board List</title>
 </head>
 <body>
-	<h2>목록 보기(List) - <%= totalPage %> 중 <%= pageNum %></h2>
+	<h2>목록 보기(List)</h2>
 	<form method="get">
 		<table border="1" width="90%">
 			<tr>
@@ -75,10 +61,8 @@ dao.close();
 		<%
 			} else {
 				int virtualNum = 0;
-				int countNum = 0;
 				for (BoardDTO dto : boardLists) {
-					// virtualNum = totalCount--;
-					virtualNum = totalCount - (((pageNum - 1) * pageSize) + countNum++);
+					virtualNum = totalCount--;
 		%>
 		<tr align="center">
 			<td><%= virtualNum %></td>
@@ -95,10 +79,7 @@ dao.close();
 		%>
 	</table>
 	<table border="1" width="90%">
-		<tr align="center">
-			<td><%= Paging.pagingStr(totalCount, pageSize, blockPage, pageNum, request.getRequestURI()) %></td>
-			<td><button type="button" onclick="location.href='Write.jsp';">글쓰기</button></td>
-		</tr>
+		<tr align="right"><td><button type="button" onclick="location.href='Write.jsp';">글쓰기</button></td></tr>
 	</table>
 </body>
 </html>

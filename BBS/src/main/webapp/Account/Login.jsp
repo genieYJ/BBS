@@ -48,6 +48,7 @@ if (!loginID.equals("")) {
 	</form>
 	<% } else { %>
 	<%= session.getAttribute("UserName") %> 회원님, 로그인 하셨습니다. <br>
+	<a href="../Board/List.jsp">[Board]</a>
 	<a href="Logout.jsp">[Logout]</a>
 	<% } %>
 </body>
