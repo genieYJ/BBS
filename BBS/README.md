@@ -57,6 +57,18 @@ VALUES (seq_board_num.nextval, '관리자가 작성한 제목입니다', '관리
 [commit]
 SQL> commit;
 ```
+```
+[attachedFile TABLE 생성]
+SQL> CREATE TABLE myfile(
+idx NUMBER PRIMARY KEY, 
+name VARCHAR2(50) NOT NULL, 
+title VARCHAR2(200) NOT NULL, 
+cate VARCHAR2(30), 
+ofile VARCHAR2(100) NOT NULL, 
+sfile VARCHAR2(30) NOT NULL, 
+postdate DATE DEFAULT sysdate NOT NULL
+);
+```
 
 ---
 #### Connection Pool을 위한 DB 연결
@@ -67,6 +79,7 @@ SQL> commit;
  // <GlobalNamingResources> 엘리먼트에 추가
  <Resource auth="Container"
               driverClassName="oracle.jdbc.OracleDriver"
+              type="javax.sql.DataSource"
               initialSize="0"
               minIdle="5"
               maxTotal="20"
