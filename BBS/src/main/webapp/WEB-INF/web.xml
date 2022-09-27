@@ -36,4 +36,12 @@
 		<param-name>PAGES_PER_BLOCK</param-name>
 		<param-value>5</param-value>
 	</context-param>
+	<servlet>
+		<servlet-name>MVCBoardList</servlet-name>
+		<servlet-class>mvcboard.ListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardList</servlet-name>
+		<url-pattern>/mvcboard/list.do</url-pattern>
+	</servlet-mapping>
 </web-app>

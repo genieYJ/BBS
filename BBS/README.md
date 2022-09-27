@@ -69,6 +69,28 @@ sfile VARCHAR2(30) NOT NULL,
 postdate DATE DEFAULT sysdate NOT NULL
 );
 ```
+```
+[mvcboard TABLE 생성]
+SQL > CREATE TABLE mvcboard(
+idx NUMBER PRIMARY KEY, 
+name VARCHAR2(50) NOT NULL, 
+title VARCHAR2(200) NOT NULL, 
+content VARCHAR2(2000) NOT NULL, 
+postdate DATE DEFAULT sysdate NOT NULL, 
+ofile VARCHAR2(100), 
+sfile VARCHAR2(30), 
+downcount NUMBER(5) DEFAULT 0 NOT NULL, 
+pass VARCHAR2(50) NOT NULL, 
+visitcount NUMBER DEFAULT 0 NOT NULL
+);
+
+[mvcboard TABLE dummy data]
+SQL > INSERT INTO mvcboard (idx, name, title, content, pass) VALUES (seq_board_num.nextval, '홍길동', '제목 1 홍길동', '내용 홍길동 홍길동 홍길동 홍길동', '1234');
+SQL > INSERT INTO mvcboard (idx, name, title, content, pass) VALUES (seq_board_num.nextval, '홍길이', '제목 2 홍길이', '내용 홍길이 홍길이 홍길이 홍길이', '1234');
+SQL > INSERT INTO mvcboard (idx, name, title, content, pass) VALUES (seq_board_num.nextval, '홍길준', '제목 3 홍길준', '내용 홍길준 홍길준 홍길준 홍길준', '1234');
+SQL > INSERT INTO mvcboard (idx, name, title, content, pass) VALUES (seq_board_num.nextval, '홍길찬', '제목 4 홍길찬', '내용 홍길찬 홍길찬 홍길찬 홍길찬', '1234');
+SQL > INSERT INTO mvcboard (idx, name, title, content, pass) VALUES (seq_board_num.nextval, '홍길희', '제목 5 홍길희', '내용 홍길희 홍길희 홍길희 홍길희', '1234');
+```
 
 ---
 #### Connection Pool을 위한 DB 연결
