@@ -87,7 +87,7 @@ public class BoardDAO extends JDBConnect {
 				+ ") Tb "
 				+ ") "
 				+ "WHERE rNum BETWEEN ? AND ?";
-		
+		System.out.println(query);
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, map.get("start").toString());

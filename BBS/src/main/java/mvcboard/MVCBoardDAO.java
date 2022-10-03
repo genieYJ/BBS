@@ -22,7 +22,7 @@ public class MVCBoardDAO extends DBConnPool {
 			query += " WHERE " + map.get("searchfield") 
 			+ " LIEK '%" + map.get("searchWord") + "%'";
 		}
-		
+
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
@@ -40,25 +40,27 @@ public class MVCBoardDAO extends DBConnPool {
 	public List<MVCBoardDTO> selectListPage(Map<String, Object> map) {
 		List<MVCBoardDTO> board = new Vector<MVCBoardDTO>();
 		
-		String query = "SELECT * FROM ( "
-				+ "SELECT Tb.*, ROWNUM rNum FROM ( "
+		String query = "SELECT * FROM ("
+				+ "SELECT Tb.*, ROWNUM rNum FROM ("
 				+ "SELECT * FROM mvcboard ";
 		
-		if (map.get("searchWord") == null) {
-			query += "WHERE " + map.get("searchfield") + 
-					" LIKE '%" + map.get("searchWord") + "%' ";
+		if (map.get("searchWord") != null) {
+			query += "WHERE " + map.get("searchField")
+					+ " LIKE '%" + map.get("searchWord") + "%' ";
 		}
 		
 		query += "ORDER BY idx DESC "
 				+ ") Tb "
 				+ ") "
-				+ "WHERE rNUM BETWEEN ? AND ?";
-		
+				+ "WHERE rNum BETWEEN ? AND ?";
+
+		System.out.println(query);
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, map.get("start").toString());
 			psmt.setString(2, map.get("end").toString());
 			rs = psmt.executeQuery();
+			
 			
 			while (rs.next()) {
 				MVCBoardDTO dto = new MVCBoardDTO();
@@ -80,7 +82,6 @@ public class MVCBoardDAO extends DBConnPool {
 			System.out.println("게시물 조회 중 예외 발생");
 			e.printStackTrace();
 		}
-		
 		return board;
 	}
 }

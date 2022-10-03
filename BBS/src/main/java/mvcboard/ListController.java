@@ -48,7 +48,7 @@ public class ListController extends HttpServlet {
 		
 		dao.close();
 		
-		String pagingImg = Paging.pagingStr(totalCount, pageSize, blockPage, pageNum, "../mvcboard/list.do");
+		String pagingImg = Paging.pagingStr(totalCount, pageSize, blockPage, pageNum, "../MVCBoard/List.do");
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
@@ -56,6 +56,6 @@ public class ListController extends HttpServlet {
 		
 		req.setAttribute("boardLists", boardLists);
 		req.setAttribute("map", map);
-		req.getRequestDispatcher("MVCBoard/List.jsp").forward(req, resp);
+		req.getRequestDispatcher("/MVCBoard/List.jsp").forward(req, resp);
 	}
 }
