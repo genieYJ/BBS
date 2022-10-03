@@ -36,12 +36,16 @@
 		<param-name>PAGES_PER_BLOCK</param-name>
 		<param-value>5</param-value>
 	</context-param>
+	<context-param>
+		<param-name>maxPostSize</param-name>
+		<param-value>1024000</param-value>
+	</context-param>
 	<servlet>
-		<servlet-name>MVCBoardList</servlet-name>
-		<servlet-class>mvcboard.ListController</servlet-class>
+		<servlet-name>MVCBoard</servlet-name>
+		<servlet-class>mvcboard.BoardController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>MVCBoardList</servlet-name>
-		<url-pattern>/MVCBoard/List.do</url-pattern>
+		<servlet-name>MVCBoard</servlet-name>
+		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 </web-app>

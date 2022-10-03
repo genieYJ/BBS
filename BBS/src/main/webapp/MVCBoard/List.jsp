@@ -39,14 +39,14 @@
 		<c:otherwise>
 		<c:forEach items="${ boardLists }" var="row" varStatus="loop">
 		<tr align="center">
-			<td>${ map.totalCount - ((map.pageNum - 1) * map.pageSize) + loop.index }</td>
-			<td align="left"><a href="../mvcboard/view.do?idx=${ row.idx }">${ row.title }</a></td>
+			<td>${ map.totalCount - (((map.pageNum - 1) * map.pageSize) + loop.index) }</td>
+			<td align="left"><a href="../MVCBoard/View.do?idx=${ row.idx }">${ row.title }</a></td>
 			<td>${ row.name }</td>
 			<td>${ row.visitcount }</td>
 			<td>${ row.postdate }</td>
 			<td>
 				<c:if test="${ not empty row.ofile }">
-				<a href="../mvcboard/download.do?ofile=${ row.ofile }&sfile=${ row.sfile }&idx=${ row.idx }">[Download]</a>
+				<a href="../MVCBoard/Download.do?ofile=${ row.ofile }&sfile=${ row.sfile }&idx=${ row.idx }">[Download]</a>
 				</c:if>
 			</td>
 		</tr>
@@ -58,7 +58,7 @@
 		<tr align="center">
 			<td>${ map.pagingImg }</td>
 			<td width="100%">
-				<button type="button" onclick="location.href='../mvcboard/write.do';">글쓰기</button>
+				<button type="button" onclick="location.href='../MVCBoard/Write.do';">글쓰기</button>
 			</td>
 		</tr>
 	</table>

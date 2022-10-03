@@ -18,11 +18,11 @@ public class MVCBoardDAO extends DBConnPool {
 		
 		String query = "SELECT COUNT(*) FROM mvcboard";
 		
-		if (map.get("searchWord") != null) {
+		if (map.get("searchWord") != null && map.get("searchWord") != "") {
 			query += " WHERE " + map.get("searchfield") 
 			+ " LIEK '%" + map.get("searchWord") + "%'";
 		}
-
+		
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
@@ -44,7 +44,7 @@ public class MVCBoardDAO extends DBConnPool {
 				+ "SELECT Tb.*, ROWNUM rNum FROM ("
 				+ "SELECT * FROM mvcboard ";
 		
-		if (map.get("searchWord") != null) {
+		if (map.get("searchWord") != null && map.get("searchWord") != "") {
 			query += "WHERE " + map.get("searchField")
 					+ " LIKE '%" + map.get("searchWord") + "%' ";
 		}
@@ -54,7 +54,6 @@ public class MVCBoardDAO extends DBConnPool {
 				+ ") "
 				+ "WHERE rNum BETWEEN ? AND ?";
 
-		System.out.println(query);
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, map.get("start").toString());
@@ -84,4 +83,120 @@ public class MVCBoardDAO extends DBConnPool {
 		}
 		return board;
 	}
+
+	// Insert MVCBoard List
+	public int insertWrite(MVCBoardDTO dto) {
+		int result = 0;
+		
+		try {
+			String query = "INSERT INTO mvcboard ("
+					+ "idx, name, title, content, ofile, sfile, pass) "
+					+ "VALUES (seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, ?)";
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getOfile());
+			psmt.setString(5, dto.getSfile());
+			psmt.setString(6, dto.getPass());
+			result = psmt.executeUpdate();
+			System.out.println(result);
+		} catch (Exception e) {
+			System.out.println("게시물 입력 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	// Detail MVCBoard List
+	public MVCBoardDTO selectView(String idx) {
+		
+		MVCBoardDTO dto = new MVCBoardDTO();
+		String query = "SELECT * FROM mvcboard WHERE idx=?";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, idx);
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) {
+				dto.setIdx(rs.getString(1));
+				dto.setName(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setContent(rs.getString(4));
+				dto.setPostdate(rs.getDate(5));
+				dto.setOfile(rs.getString(6));
+				dto.setSfile(rs.getString(7));
+				dto.setDowncount(rs.getInt(8));
+				dto.setPass(rs.getString(9));
+				dto.setVisitcount(rs.getInt(10));
+			}
+		} catch (Exception e) {
+			System.out.println("게시물 상세보기 중 예외 발생");
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	// Update VisitCount
+	public void updateVisitCount(String idx) {
+		String query = "UPDATE mvcboard SET "
+				+ "visitcount=visitcount+1 WHERE idx=?";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, idx);
+			psmt.executeQuery();
+		} catch (Exception e) {
+			System.out.println("게시물 조회 수 증가 중 예외 발생");
+			e.printStackTrace();
+		}
+	}
+
+	// Update DownloadCount
+	public void downCountPlus (String idx) {
+		String query = "UPDATE mvcboard SET downcount=downcount+1 WHERE idx=?";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, idx);
+			psmt.executeQuery();
+		} catch (Exception e) {}
+	}
+
+	// Confirm Password
+	public boolean confirmPassword (String pass, String idx) {
+		boolean isCorr = true;
+		try {
+			String query = "SELECT COUNT(*) FROM mvcboard WHERE pass=? AND idx=?";
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, pass);
+			psmt.setString(2, idx);
+			rs = psmt.executeQuery();
+			rs.next();
+			if (rs.getInt(1) == 0) {
+				isCorr = false;
+			}
+		} catch (Exception e) {
+			isCorr = false;
+			System.out.println("비밀번호 일치 여부 확인 중 예외 발생");
+			e.printStackTrace();
+		}
+		return isCorr;
+	}
+	
+	// Delete Post
+	public int deletePost(String idx) {
+		int result = 0;
+		try {
+			String query = "DELETE FROM mvcboard WHERE idx=?";
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, idx);
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("게시물 삭제 중 예외 발생");
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }
